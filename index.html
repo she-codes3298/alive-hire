@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AliveHire - Coming Soon</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        @keyframes fade-in-down {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-down {
+            animation: fade-in-down 1s ease-out forwards;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) rotate(10deg);
+            }
+            100% {
+                transform: translateX(200%) rotate(10deg);
+            }
+        }
+
+        .shine-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.025) 45%,
+                rgba(255, 255, 255, 0.08) 50%,
+                rgba(255, 255, 255, 0.025) 55%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            animation: shine 5s linear infinite;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="w-full overflow-x-hidden">
+        <div class="relative w-full min-h-screen overflow-hidden text-white" style="font-family: 'Playfair Display', serif;">
+            <!-- Background Video -->
+            <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+                <source src="asset/imagesset/employer.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Dark Overlay -->
+            <div class="absolute inset-0 z-0 bg-black/40 backdrop-blur-sm"></div>
+
+            <!-- Header -->
+            <div class="absolute top-0 left-0 w-full flex items-center justify-between p-6 z-10">
+                <div class="flex items-center gap-3">
+                    <img src="asset/imagesset/alivehirelogo.png" class="h-12 md:h-14" alt="Alive Hire Logo">
+                </div>
+                <a href="#waitlist"
+                    class="px-8 py-3.5 text-white text-base md:text-lg font-semibold rounded-md
+                           bg-gradient-to-r from-[#00BBD3] to-[#0088aa]
+                           shadow-[0_8px_20px_rgba(0,187,211,0.4)]
+                           ring-2 ring-cyan-300/50
+                           hover:from-cyan-400 hover:to-cyan-600
+                           hover:shadow-[0_10px_30px_rgba(0,187,211,0.5)]
+                           transition-all duration-300 ease-out backdrop-blur-sm">
+                    Pre-Register
+                </a>
+            </div>
+
+            <div class="relative z-10 h-full flex items-start justify-start px-6 md:px-16 pt-[35vh]">
+                <div class="max-w-xl w-full px-6 py-8  
+                           flex flex-col items-center justify-center text-center 
+                           opacity-0 animate-fade-in-down">
+
+                    <!-- Main Heading -->
+                    <h1 class="text-4xl md:text-6xl font-extrabold mb-3 drop-shadow-2xl text-white leading-tight">
+                        Coming Soon
+                    </h1>
+
+                    <!-- Typing line -->
+                    <p class="uppercase tracking-wide font-semibold mb-4 p-2 leading-snug">
+                        <span id="typing-text"
+                              class="bg-gradient-to-r from-cyan-500 to-cyan-700 bg-clip-text text-transparent block 
+                                     text-xl md:text-2xl font-bold min-h-[2.25rem]">
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="absolute bottom-10 md:bottom-14 w-full px-4 md:px-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-0 text-sm text-gray-300 z-10">
+
+                <!-- Countdown + Label (Left Side) -->
+                <div class="flex flex-col items-start gap-4 text-white text-base md:text-lg font-semibold">
+                    <div class="uppercase tracking-widest text-white font-extrabold text-xl md:text-2xl drop-shadow-md">
+                        Launching In
+                    </div>
+
+                    <div class="flex gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl md:text-5xl font-extrabold leading-tight" id="days">50</div>
+                            <div class="text-sm tracking-wide">Days</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl md:text-5xl font-extrabold leading-tight" id="hours">49</div>
+                            <div class="text-sm tracking-wide">Hours</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl md:text-5xl font-extrabold leading-tight" id="minutes">48</div>
+                            <div class="text-sm tracking-wide">Minutes</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl md:text-5xl font-extrabold leading-tight" id="seconds">47</div>
+                            <div class="text-sm tracking-wide">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address + Email (Right Side) -->
+                <div class="text-right leading-relaxed text-white text-base md:text-lg font-medium space-y-2">
+                    <div>AliveHire HQ, 72/3B Cyber Heights,<br class="md:hidden">
+                        Sector 18, Gurugram, Haryana</div>
+                    <div>
+                        <a href="mailto:support@alivehire.com"
+                           class="text-cyan-400 hover:text-cyan-300 hover:underline transition">
+                            support@alivehire.com
+                        </a>
+                    </div>
+                    <!-- Optional tagline for pro touch -->
+                    <div class="text-xs text-white/60 italic mt-1">Empowered by AI. Built for You.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="relative text-white py-20 px-6 md:px-12 overflow-hidden opacity-0 animate-fade-in-down"
+             style="animation-delay: 0.6s; animation-fill-mode: forwards;"
+             x-data="{ activeTab: 'jobseeker' }">
+        <!-- Background -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <img src="asset/imagesset/sparkles.png" class="w-full h-full object-cover opacity-10">
+        </div>
+
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start justify-between gap-12 relative z-10" style="font-family: 'Playfair Display', serif;">
+            <!-- Tabs + Feature Cards -->
+            <div class="w-full md:w-[50%] space-y-6 transition-all duration-700"
+                 :class="activeTab === 'jobseeker' ? 'order-1' : 'order-2'">
+                <!-- Heading -->
+                <h2 class="text-3xl md:text-4xl font-extrabold text-cyan-400 tracking-tight text-center">
+                    What Describes you better ?
+                </h2>
+
+                <!-- Tabs -->
+                <div class="flex justify-center">
+                    <div class="bg-white/5 rounded-lg p-1 flex space-x-2 shadow-inner">
+                        <button @click="activeTab = 'jobseeker'"
+                                :class="activeTab === 'jobseeker' ? 'bg-cyan-400 text-white' : 'text-white hover:bg-white/10'"
+                                class="px-6 py-3 rounded-md text-base font-semibold transition-all duration-300">
+                            Job Seeker
+                        </button>
+                        <button @click="activeTab = 'recruiter'"
+                                :class="activeTab === 'recruiter' ? 'bg-cyan-400 text-white' : 'text-white hover:bg-white/10'"
+                                class="px-6 py-3 rounded-md text-base font-semibold transition-all duration-300">
+                            Recruiter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Job Seeker Features -->
+                <div x-show="activeTab === 'jobseeker'" x-transition>
+                    <div class="relative mt-8 h-[520px] w-full max-w-[640px] mx-auto">
+                        <!-- Feature 1 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 0px; left: calc(50% - 140px + 0px); width: 280px;">
+                            Smart Resume Feedback
+                        </div>
+                        <!-- Feature 2 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 78px; left: calc(50% - 140px + -100px); width: 280px;">
+                            Cover Letter that Writes itself
+                        </div>
+                        <!-- Feature 3 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 156px; left: calc(50% - 140px + -200px); width: 280px;">
+                            Interview Practice Assistant
+                        </div>
+                        <!-- Feature 4 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 234px; left: calc(50% - 140px + -300px); width: 280px;">
+                            Personal Portfolio Website
+                        </div>
+                        <!-- Feature 5 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 312px; left: calc(50% - 140px + -200px); width: 280px;">
+                            Career Planner & Daily Tracker
+                        </div>
+                        <!-- Feature 6 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 390px; left: calc(50% - 140px + -100px); width: 280px;">
+                            Auto Job Apply Agent
+                        </div>
+                        <!-- Feature 7 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 468px; left: calc(50% - 140px + 0px); width: 280px;">
+                            24/7 Career Chat Assistant
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recruiter Features (Mirrored Layout) -->
+                <div x-show="activeTab === 'recruiter'" x-transition>
+                    <div class="relative mt-8 h-[520px] w-full max-w-[640px] mx-auto">
+                        <!-- Feature 1 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 0px; left: calc(50% - 140px + 0px); width: 280px;">
+                            End-to-End Hiring Suite
+                        </div>
+                        <!-- Feature 2 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 78px; left: calc(50% - 140px + 100px); width: 280px;">
+                            Cultural Fit Shortlisting
+                        </div>
+                        <!-- Feature 3 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 156px; left: calc(50% - 140px + 200px); width: 280px;">
+                            HR Training Module
+                        </div>
+                        <!-- Feature 4 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 234px; left: calc(50% - 140px + 300px); width: 280px;">
+                            AI Recruiter Chat Assistant
+                        </div>
+                        <!-- Feature 5 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 312px; left: calc(50% - 140px + 200px); width: 280px;">
+                            Smart Screening Test Builder
+                        </div>
+                        <!-- Feature 6 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 390px; left: calc(50% - 140px + 100px); width: 280px;">
+                            AI Candidate Matching Engine
+                        </div>
+                        <!-- Feature 7 -->
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                             style="top: 468px; left: calc(50% - 140px + 0px); width: 280px;">
+                            Real Talent Visibility
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aarya Bot -->
+            <div class="w-full md:w-[50%] flex items-center justify-center transition-all duration-700"
+                 :class="activeTab === 'jobseeker' ? 'order-2' : 'order-1'">
+
+                <div class="relative z-10 flex items-center gap-4"
+                     :class="activeTab === 'recruiter' ? 'flex-row-reverse' : 'flex-row'">
+
+                    <!-- Chat Bubble -->
+                    <div class="relative bg-white text-black text-sm rounded-xl px-4 py-3 shadow-lg max-w-[240px]">
+                        Hi there, I am Aarya<br>Let me show you some of our features.
+                        <div class="absolute top-6 -right-2 w-4 h-4 bg-white rotate-45 shadow-md"></div>
+                    </div>
+
+                    <!-- Bot Image (shifted upward) -->
+                    <div class="mt-[50%]">
+                        <img src="asset/imagesset/aarya.png" alt="Aarya Bot" class="w-[180px] drop-shadow-xl">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="w-full flex justify-end px-4 mb-4">
+        <div class="w-full md:w-[90%] lg:w-[75%] p-8 md:p-12 text-white rounded-md shadow-xl border border-white/10 relative overflow-hidden"
+             style="
+                font-family: 'Playfair Display', serif;
+                background: rgba(255, 255, 255, 0.04);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+             ">
+
+            <!-- Shine Effect Overlay -->
+            <div class="shine-overlay"></div>
+
+            <!-- Heading -->
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                What Makes Alive Hire Truly Unique <span class="ml-1">🔒</span>
+            </h2>
+
+            <!-- Subheading -->
+            <p class="text-base text-white/80 max-w-3xl mb-10">
+                AliveHire blends AI with simplicity to transform how you grow your career or build your team.
+                <br class="hidden md:block">
+                From instant job tools to auto-apply agents, everything works together — effortlessly.
+            </p>
+
+            <!-- Main content section -->
+            <div class="flex flex-col md:flex-row gap-10 items-start justify-between relative">
+
+                <!-- Left image -->
+                <div class="w-full md:w-[50%] flex justify-center md:justify-end">
+                    <img src="asset/imagesset/image1.png"
+                         alt="Unique Feature Image"
+                         class="rounded-md shadow-md w-full max-w-[550px] border border-white/10">
+                </div>
+
+                <!-- Right text features -->
+                <div class="w-full md:w-[50%] space-y-6 relative z-20">
+                    <div class="flex items-start gap-4">
+                        <!-- Icon -->
+                        <div class="text-cyan-400 mt-1 text-xl">
+                            <i class="fas fa-crosshairs"></i>
+                        </div>
+
+                        <!-- Text -->
+                        <div>
+                            <div class="text-lg font-semibold">Real-Time Career Chat Assistant</div>
+                            <p class="text-sm text-white/70 mt-1">
+                                Talk to your assistant like mentor for career advice
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <!-- Icon -->
+                        <div class="text-cyan-400 mt-1 text-xl">
+                            <i class="fas fa-crosshairs"></i>
+                        </div>
+
+                        <!-- Text -->
+                        <div>
+                            <div class="text-lg font-semibold">Real-Time Career Chat Assistant</div>
+                            <p class="text-sm text-white/70 mt-1">
+                                Talk to your assistant like mentor for career advice
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <!-- Icon -->
+                        <div class="text-cyan-400 mt-1 text-xl">
+                            <i class="fas fa-crosshairs"></i>
+                        </div>
+
+                        <!-- Text -->
+                        <div>
+                            <div class="text-lg font-semibold">Real-Time Career Chat Assistant</div>
+                            <p class="text-sm text-white/70 mt-1">
+                                Talk to your assistant like mentor for career advice
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <!-- Icon -->
+                        <div class="text-cyan-400 mt-1 text-xl">
+                            <i class="fas fa-crosshairs"></i>
+                        </div>
+
+                        <!-- Text -->
+                        <div>
+                            <div class="text-lg font-semibold">Real-Time Career Chat Assistant</div>
+                            <p class="text-sm text-white/70 mt-1">
+                                Talk to your assistant like mentor for career advice
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Decorative line -->
+                    <div class="hidden md:block absolute -right-6 top-0 h-full w-[2px] bg-white/20 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Countdown Script -->
+    <script>
+        const launchDate = new Date("2025-07-08T00:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+        }, 1000);
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const lines = [
+                // Core Career Tools
+                "AI Resume Optimization That Gets You Interviews",
+                "Create Your Resume with AI in Seconds",
+                "Upload, Parse, and Perfect Your Resume",
+                "AI Cover Letters That Match the JD",
+                "Build a Personal Career Website Instantly",
+
+                // Application & Dashboard
+                "One-Click Job Applications with AI Agents",
+                "Track Every Application in Real-Time",
+                "Never Miss a Job Opportunity Again",
+                "Smart Job Recommendations Just for You",
+                "Your Job Search, Automated by AI",
+
+                // Interview Preparation
+                "Mock Interviews Powered by AI",
+                "Practice with Real-Time AI Interviewers",
+                "Get Feedback Like a Real Recruiter",
+                "Interview Coaching Tailored to Your Role",
+                "Behavioral + Technical Test Practice",
+
+                // Employer-Facing Tools
+                "Smart Hiring with AI-Powered Filters",
+                "Instant Resume Parsing for Recruiters",
+                "Shortlist Candidates in Seconds",
+                "AI Screening Tests That Adapt",
+                "Job Descriptions Written by AI",
+
+                // Unique Value Propositions
+                "AI Agents That Apply Jobs for You",
+                "Let AI Match You to the Right Job",
+                "Resumes That Beat the ATS",
+                "Your Career, Guided by an AI Coach",
+                "Never Write a Cover Letter Again",
+                "Interview Smarter, Not Harder",
+                "Mock Tests Designed by Experts + AI",
+                "One Platform. Endless Possibilities.",
+
+                // Brand & Ecosystem
+                "Built for Job Seekers. Powered by AI.",
+                "A Better Way to Get Hired.",
+                "AI + Career Tools = AliveHire"
+            ];
+
+            const target = document.getElementById("typing-text");
+            let index = 0;
+            let char = 0;
+            let isDeleting = false;
+
+            function typeLine() {
+                const line = lines[index];
+                if (isDeleting) {
+                    char--;
+                    target.textContent = line.substring(0, char);
+                } else {
+                    char++;
+                    target.textContent = line.substring(0, char);
+                }
+
+                if (!isDeleting && char === line.length) {
+                    setTimeout(() => {
+                        isDeleting = true;
+                    }, 1200);
+                } else if (isDeleting && char === 0) {
+                    isDeleting = false;
+                    index = (index + 1) % lines.length;
+                }
+
+                setTimeout(typeLine, isDeleting ? 40 : 70);
+            }
+
+            typeLine();
+        });
+    </script>
+</body>
+</html>
