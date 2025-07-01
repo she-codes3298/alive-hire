@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AliveHire - Coming Soon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        @keyframes fade-in-down {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-down {
+            animation: fade-in-down 1s ease-out forwards;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) rotate(10deg);
+            }
+
+            100% {
+                transform: translateX(200%) rotate(10deg);
+            }
+        }
+
+        .shine-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(120deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.025) 45%,
+                    rgba(255, 255, 255, 0.08) 50%,
+                    rgba(255, 255, 255, 0.025) 55%,
+                    rgba(255, 255, 255, 0) 100%);
+            animation: shine 5s linear infinite;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            z-index: 10;
+        }
+        /* Ensure select dropdown arrow uses Tailwind's default or a custom one if needed */
+        select[name="user_type"].appearance-none { /* Apply only when appearance-none is used */
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem; 
+        }
+        .text-gray-500.bg-gray-800 option { /* Style for disabled option text color in some browsers */
+            color: #6b7280 !important;
+        }
+        .text-black.bg-white option { /* Style for other options text color */
+             color: #000000 !important;
+        }
+
+    </style>
+</head>
+
+<body class="bg-[#0A222C]">
+
+    <div class="w-full overflow-x-hidden">
+        <div class="relative w-full min-h-screen overflow-hidden text-white"
+            style="font-family: 'Playfair Display', serif;">
+            <!-- Background Video -->
+            <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+                <source src="{{ asset('imagesset/employer.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Dark Overlay -->
+            <div class="absolute inset-0 z-0 bg-black/40 backdrop-blur-sm "></div>
+
+            <!-- Header -->
+            <div class="absolute top-0 left-0 w-full flex items-center justify-between p-6 z-10">
+                <div class="flex items-center gap-3">
+                    <img src="{{ asset('imagesset/alivehirelogo.png') }}" class="h-12 md:h-14" alt="Alive Hire Logo">
+                </div>
+                <a href="#waitlist"
+                    class="px-8 py-3.5 text-white text-base md:text-lg font-semibold rounded-md
+                      bg-gradient-to-r from-[#00BBD3] to-[#0088aa]
+                      shadow-[0_8px_20px_rgba(0,187,211,0.4)]
+                      ring-2 ring-cyan-300/50
+                      hover:from-cyan-400 hover:to-cyan-600
+                      hover:shadow-[0_10px_30px_rgba(0,187,211,0.5)]
+                      transition-all duration-300 ease-out backdrop-blur-sm">
+                    Pre-Register
+                </a>
+            </div>
+
+            <div class="relative z-10 h-full flex items-start justify-start px-6 md:px-16 pt-[35vh]">
+                <div class="max-w-xl w-full px-6 py-8  
+                    flex flex-col items-center justify-center text-center 
+                    opacity-0 animate-fade-in-down">
+
+                    <!-- Main Heading -->
+                    <h1 class="text-4xl md:text-6xl font-extrabold mb-3 drop-shadow-2xl text-white leading-tight">
+                        Coming Soon
+                    </h1>
+
+                    <!-- Typing line -->
+                    <p class="uppercase tracking-wide font-semibold mb-4 p-2 leading-snug">
+                        <span id="typing-text"
+                            class="bg-gradient-to-r from-cyan-500 to-cyan-700 bg-clip-text text-transparent block 
+                             text-xl md:text-2xl font-bold min-h-[2.25rem]">
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Footer section of the hero -->
+            <div
+                class="absolute bottom-10 md:bottom-14 w-full px-4 md:px-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-0 text-sm text-gray-300 z-10">
+
+                <!-- Countdown + Label (Left Side) -->
+                <div class="flex flex-col items-start gap-4 text-white text-base md:text-lg font-semibold">
+                    <div class="uppercase tracking-widest text-white font-extrabold text-xl md:text-2xl drop-shadow-md">
+                        Launching In
+                    </div>
+
+                    <div class="flex gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl md:text-5xl font-extrabold leading-tight" id="days">50</div>
+                            <div class="text-sm tracking-wide">Days</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl md:text-5xl font-extrabold leading-tight" id="hours">49</div>
+                            <div class="text-sm tracking-wide">Hours</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl md:text-5xl font-extrabold leading-tight" id="minutes">48</div>
+                            <div class="text-sm tracking-wide">Minutes</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl md:text-5xl font-extrabold leading-tight" id="seconds">47</div>
+                            <div class="text-sm tracking-wide">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address + Email (Right Side) -->
+                <div class="text-right leading-relaxed text-white text-base md:text-lg font-medium space-y-2">
+                    <div>AliveHire HQ, 72/3B Cyber Heights,<br class="md:hidden" />
+                        Sector 18, Gurugram, Haryana</div>
+                    <div>
+                        <a href="mailto:support@alivehire.com"
+                            class="text-cyan-400 hover:text-cyan-300 hover:underline transition">
+                            support@alivehire.com
+                        </a>
+                    </div>
+                    <!-- Optional tagline for pro touch -->
+                    <div class="text-xs text-white/60 italic mt-1">Empowered by AI. Built for You.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="relative text-white py-20 px-6 md:px-12 overflow-hidden opacity-0 animate-fade-in-down"
+        style="animation-delay: 0.6s; animation-fill-mode: forwards; background-color: #071820;"
+        x-data="{ activeTab: 'jobseeker' }">
+        <!-- Background Sparkles -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <img src="{{ asset('imagesset/sparkles.png') }}" class="w-full h-full object-cover opacity-10" />
+        </div>
+
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start justify-between gap-12 relative z-10"
+            style="font-family: 'Playfair Display', serif;">
+            <!-- Tabs + Feature Cards -->
+            <div class="w-full md:w-[50%] space-y-6 transition-all duration-700"
+                :class="activeTab === 'jobseeker' ? 'order-1' : 'order-2'">
+                <!-- Heading -->
+                <h2 class="text-3xl md:text-4xl font-extrabold text-cyan-400 tracking-tight text-center">
+                    What Describes you better ?
+                </h2>
+
+                <!-- Tabs -->
+                <div class="flex justify-center">
+                    <div class="bg-white/5 rounded-lg p-1 flex space-x-2 shadow-inner">
+                        <button @click="activeTab = 'jobseeker'"
+                            :class="activeTab === 'jobseeker' ? 'bg-cyan-400 text-white' : 'text-white hover:bg-white/10'"
+                            class="px-6 py-3 rounded-md text-base font-semibold transition-all duration-300">
+                            Job Seeker
+                        </button>
+                        <button @click="activeTab = 'recruiter'"
+                            :class="activeTab === 'recruiter' ? 'bg-cyan-400 text-white' : 'text-white hover:bg-white/10'"
+                            class="px-6 py-3 rounded-md text-base font-semibold transition-all duration-300">
+                            Recruiter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Job Seeker Features -->
+                <div x-show="activeTab === 'jobseeker'" x-transition>
+                    <div class="relative mt-8 h-[520px] w-full max-w-[640px] mx-auto">
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 0px; left: calc(50% - 140px + 0px); width: 280px;">
+                            Smart Resume Feedback
+                        </div>
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 78px; left: calc(50% - 140px - 100px); width: 280px;">
+                            Cover Letter that Writes itself
+                        </div>
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 156px; left: calc(50% - 140px - 200px); width: 280px;">
+                            Interview Practice Assistant
+                        </div>
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 234px; left: calc(50% - 140px - 300px); width: 280px;">
+                            Personal Portfolio Website
+                        </div>
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 312px; left: calc(50% - 140px - 200px); width: 280px;">
+                            Career Planner & Daily Tracker
+                        </div>
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 390px; left: calc(50% - 140px - 100px); width: 280px;">
+                            Auto Job Apply Agent
+                        </div>
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 468px; left: calc(50% - 140px + 0px); width: 280px;">
+                            24/7 Career Chat Assistant
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recruiter Features (Mirrored Layout) -->
+                <div x-show="activeTab === 'recruiter'" x-transition>
+                    <div class="relative mt-8 h-[520px] w-full max-w-[640px] mx-auto">
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 0px; left: calc(50% - 140px + 0px); width: 280px;">
+                            End-to-End Hiring Suite
+                        </div>
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 78px; left: calc(50% - 140px + 100px); width: 280px;">
+                            Cultural Fit Shortlisting
+                        </div>
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 156px; left: calc(50% - 140px + 200px); width: 280px;">
+                            HR Training Module
+                        </div>
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 234px; left: calc(50% - 140px + 300px); width: 280px;">
+                            AI Recruiter Chat Assistant
+                        </div>
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 312px; left: calc(50% - 140px + 200px); width: 280px;">
+                            Smart Screening Test Builder
+                        </div>
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 390px; left: calc(50% - 140px + 100px); width: 280px;">
+                            AI Candidate Matching Engine
+                        </div>
+                        <div class="absolute transition-all duration-500 ease-out hover:scale-[1.02]
+                                    border border-cyan-400/30 bg-white/5 backdrop-blur-sm text-white
+                                    px-5 py-3 rounded-lg shadow-md text-center font-semibold"
+                            style="top: 468px; left: calc(50% - 140px + 0px); width: 280px;">
+                            Real Talent Visibility
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aarya Bot -->
+            <div class="w-full md:w-[50%] flex items-center justify-center transition-all duration-700"
+                :class="activeTab === 'jobseeker' ? 'order-2 md:pl-12' : 'order-1 md:pr-12'">
+                <div class="relative w-full max-w-md aspect-[4/3.5] group">
+                    <!-- Shine Overlay -->
+                    <div class="shine-overlay opacity-70 group-hover:opacity-100 transition-opacity duration-500">
+                    </div>
+
+                    <!-- Bot Image -->
+                    <img src="{{ asset('imagesset/aaryaa.png') }}" alt="Aarya AI Assistant"
+                        class="absolute inset-0 w-full h-full object-contain drop-shadow-[0_15px_25px_rgba(0,200,255,0.3)]
+                               group-hover:drop-shadow-[0_20px_35px_rgba(0,220,255,0.45)] transition-all duration-500 transform group-hover:scale-[1.03]">
+
+                    <!-- Floating Text Bubbles -->
+                    <div x-show="activeTab === 'jobseeker'" x-transition.opacity.duration.500ms
+                        class="absolute inset-0 flex items-center justify-center">
+                        <span
+                            class="absolute top-[15%] left-[5%] bg-cyan-500/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full shadow-lg animate-pulse"
+                            style="animation-delay: 0.2s;">Resume Help?</span>
+                        <span
+                            class="absolute top-[25%] right-[8%] bg-purple-500/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full shadow-lg animate-pulse"
+                            style="animation-delay: 0.5s;">Interview Tips!</span>
+                        <span
+                            class="absolute bottom-[20%] left-[12%] bg-green-500/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full shadow-lg animate-pulse"
+                            style="animation-delay: 0.8s;">Career Path?</span>
+                    </div>
+                    <div x-show="activeTab === 'recruiter'" x-transition.opacity.duration.500ms
+                        class="absolute inset-0 flex items-center justify-center">
+                        <span
+                            class="absolute top-[18%] left-[8%] bg-sky-500/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full shadow-lg animate-pulse"
+                            style="animation-delay: 0.3s;">Best Candidates?</span>
+                        <span
+                            class="absolute top-[30%] right-[5%] bg-indigo-500/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full shadow-lg animate-pulse"
+                            style="animation-delay: 0.6s;">Screening Qs!</span>
+                        <span
+                            class="absolute bottom-[22%] left-[15%] bg-teal-500/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full shadow-lg animate-pulse"
+                            style="animation-delay: 0.9s;">Job Description?</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="waitlist"
+        class="relative bg-gradient-to-b from-[#05141A] to-[#0A222C] text-white py-20 px-6 md:px-12 overflow-hidden">
+        <!-- Subtle pattern or noise -->
+        <div class="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(200, 220, 255, 0.5)"
+                            stroke-width="0.2" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#smallGrid)" />
+            </svg>
+        </div>
+
+        <div class="max-w-3xl mx-auto text-center relative z-10">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-6 text-cyan-400 drop-shadow-lg">
+                Join the <span
+                    class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-sky-500">AliveHire</span>
+                Revolution!
+            </h2>
+            <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Be the first to experience the future of hiring and job seeking. Sign up for exclusive early access,
+                updates, and special launch day perks. Don't miss out!
+            </p>
+
+            <form action="#" method="POST" class="max-w-lg mx-auto space-y-6">
+                <!-- @csrf removed -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <input type="text" name="name" placeholder="Your Name" required
+                        class="w-full px-5 py-3.5 bg-white/10 border border-cyan-400/30 rounded-lg placeholder-gray-400
+                               focus:ring-2 focus:ring-cyan-400 focus:border-cyan-500 outline-none transition-all duration-300 shadow-md">
+
+                    <input type="email" name="email" placeholder="Your Email Address" required
+                        class="w-full px-5 py-3.5 bg-white/10 border border-cyan-400/30 rounded-lg placeholder-gray-400
+                               focus:ring-2 focus:ring-cyan-400 focus:border-cyan-500 outline-none transition-all duration-300 shadow-md">
+                </div>
+
+                <div>
+                    <select name="user_type" required
+                        class="w-full px-5 py-3.5 bg-white/10 border border-cyan-400/30 rounded-lg text-gray-300 
+                               focus:ring-2 focus:ring-cyan-400 focus:border-cyan-500 outline-none transition-all duration-300 appearance-none 
+                               cursor-pointer shadow-md">
+                        <option value="" disabled selected class="text-gray-500 bg-gray-800">I am a...</option>
+                        <option value="job_seeker" class="text-black bg-white">Job Seeker</option>
+                        <option value="recruiter" class="text-black bg-white">Recruiter / HR Professional</option>
+                        <option value="other" class="text-black bg-white">Other</option>
+                    </select>
+                </div>
+
+                <button type="submit"
+                    class="w-full px-8 py-4 text-white text-lg font-semibold rounded-lg
+                      bg-gradient-to-r from-[#00BBD3] to-[#0088aa] shadow-[0_8px_25px_rgba(0,187,211,0.45)]
+                      ring-2 ring-cyan-300/60
+                      hover:from-cyan-400 hover:to-cyan-600
+                      hover:shadow-[0_12px_35px_rgba(0,187,211,0.6)]
+                      transition-all duration-300 ease-out transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-cyan-300/80">
+                    Secure My Spot
+                </button>
+            </form>
+
+            <p class="mt-10 text-sm text-gray-400">
+                We respect your privacy. Your information is safe with us.
+            </p>
+        </div>
+    </section>
+
+    <footer class="bg-[#0A222C] text-gray-400 py-10 px-6 md:px-12 text-center text-sm">
+        <p>&copy; <span id="currentYear"></span> AliveHire. All rights reserved.</p>
+        <p class="mt-1">Powered by cutting-edge AI, designed for human connection.</p>
+        <!-- Optional: Social Links -->
+        <!-- <div class="mt-4 space-x-4">
+            <a href="#" class="hover:text-cyan-400 transition">Facebook</a>
+            <a href="#" class="hover:text-cyan-400 transition">LinkedIn</a>
+            <a href="#" class="hover:text-cyan-400 transition">Twitter</a>
+        </div> -->
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Basic Countdown Timer
+        function startCountdown(endDate) {
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = endDate - now;
+
+                if (distance < 0) {
+                    if (daysEl) daysEl.innerText = "0";
+                    if (hoursEl) hoursEl.innerText = "0";
+                    if (minutesEl) minutesEl.innerText = "0";
+                    if (secondsEl) secondsEl.innerText = "0";
+                    
+                    const countdownLabelElement = document.querySelector('.uppercase.tracking-widest.text-white.font-extrabold.text-xl.md\\:text-2xl.drop-shadow-md');
+                    if (countdownLabelElement) countdownLabelElement.innerText = "We Have Launched!";
+                    clearInterval(interval);
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                if (daysEl) daysEl.innerText = days;
+                if (hoursEl) hoursEl.innerText = hours;
+                if (minutesEl) minutesEl.innerText = minutes;
+                if (secondsEl) secondsEl.innerText = seconds;
+            }
+
+            const interval = setInterval(updateCountdown, 1000);
+            updateCountdown(); 
+        }
+        
+        const initialDays = parseInt(document.getElementById('days')?.innerText || '0');
+        const initialHours = parseInt(document.getElementById('hours')?.innerText || '0');
+        const initialMinutes = parseInt(document.getElementById('minutes')?.innerText || '0');
+        const initialSeconds = parseInt(document.getElementById('seconds')?.innerText || '0');
+
+        const launchDate = new Date(Date.now() + 
+            (initialDays * 24 * 60 * 60 * 1000) + 
+            (initialHours * 60 * 60 * 1000) + 
+            (initialMinutes * 60 * 1000) + 
+            (initialSeconds * 1000)
+        ).getTime();
+        startCountdown(launchDate);
+
+        // Typing Text Animation
+        const typingTextElement = document.getElementById('typing-text');
+        const lines = [
+            "AI-Powered Hiring Platform",
+            "Find Your Dream Job Faster",
+            "Source Top Talent Effortlessly",
+            "The Future of Recruitment is Here"
+        ];
+        let lineIndex = 0;
+        let charIndex = 0;
+        let currentLine = '';
+        let isDeleting = false;
+
+        function type() {
+            if (!typingTextElement) return;
+            currentLine = lines[lineIndex];
+
+            if (isDeleting) {
+                typingTextElement.textContent = currentLine.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingTextElement.textContent = currentLine.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentLine.length) {
+                setTimeout(() => isDeleting = true, 2000); 
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                lineIndex = (lineIndex + 1) % lines.length;
+            }
+
+            const typeSpeed = isDeleting ? 50 : 100;
+            setTimeout(type, typeSpeed);
+        }
+
+        if (typingTextElement) {
+            setTimeout(type, 500); 
+        }
+    </script>
+
+</body>
+</html>
